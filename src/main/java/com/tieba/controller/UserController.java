@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.UUID;
 
 /**
  * (User)表控制层
@@ -39,7 +41,15 @@ public class UserController {
 
     @PostMapping("/login")
     public Object login(User user) {
+        
+        StringBuilder token = new StringBuilder();
+        UUID uuid = UUID.randomUUID();
+        token.append(uuid);
         User user1 = this.userService.queryAll(user);
-        return JSON.toJSON(user1);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("name", user1.getName());
+        map.put("token", token + user1.getName());
+        map.put("currTime", System.currentTimeMillis());
+        return JSON.toJSON(map);
     }
 }

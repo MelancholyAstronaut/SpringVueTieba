@@ -39,7 +39,7 @@ public class TiebaController {
 
     @GetMapping("/getAllTieba")
     public Object getAllTieba() {
-        System.out.println(JSON.toJSON(this.tiebaService.queryAllByLimit(0, 2)));
+
         return JSON.toJSON(this.tiebaService.queryAllByLimit(0, 2));
     }
 

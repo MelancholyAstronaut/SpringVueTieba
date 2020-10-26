@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author qiu
  */
 @SpringBootApplication
-@MapperScan(value = {"com.asiainfo.mock.demo.dao"})
+@MapperScan(value = {"com.tieba.dao"})
 public class DemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);

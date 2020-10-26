@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tieba.dao.HottieDao">
+
+    <select id="queryHotTie" resultMap="hotTie">
+        select *
+        from hottie;
+    </select>
+    <resultMap id="hotTie" type="com.tieba.bean.Hottie">
+        <result property="id" column="id"/>
+        <result property="tiezi_name" column="tiezi_name"/>
+        <result property="text" column="text"/>
+        <result property="belongName" column="belongName"/>
+        <result property="time" column="time"/>
+        <association property="tieba_name" javaType="com.tieba.bean.Tieba" column="tieba_name"
+                     select="selectTiebaById"/>
+    </resultMap>
+    <select id="selectTiebaById" resultType="com.tieba.bean.Tieba">
+        select *
+        from tieba
+        where id = #{tieba_name}
+    </select>
+</mapper>
