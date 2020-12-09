@@ -4,9 +4,59 @@
     <meta charset="UTF-8">
     <title>测试</title>
 </head>
+<script th:src="@{layui-src/dist/layui.js}"></script>
+<link rel="stylesheet" th:href="@{layui-src/dist/css/layui.css}">
+<script type="text/html" id="barDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add">添加</button>
+        <button class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
+    </div>
+</script>
 <body>
+<table lay-filter="test" id="mytable">
+
+</table>
 <div>
-    version1.0
+    <button class="layui-btn upload" style="display: none">确定</button>
 </div>
 </body>
+<script type="application/javascript" th:inline="none">
+    layui.use(['table', 'layer', 'jquery', 'upload'], function () {
+        var table = layui.table;
+        var layer = layui.layer;
+        var upload = layui.upload;
+        var qnrId;
+        var dict = [
+            {id: 1, username: "liming", sex: "男"},
+            {id: 2, username: "lihua", sex: "男"},
+            {id: 3, username: "xiaohua", sex: "女"}
+        ];
+        table.render({
+            elem: "#mytable",
+            height: 312
+            , cols: [
+                    [{field: 'id', title: 'ID', width: 80, sort: true, fixed: 'left'}
+                        , {field: 'username', title: '用户名', width: 80}
+                        , {field: 'sex', title: '性别', width: 80, sort: true}
+                        , {fixed: 'right', width: 150, align: 'center', toolbar: '#barDemo'}]
+                ],
+            data: dict,
+        });
+        table.on("tool(test)", function (obj) {
+            qnrId = obj.data.id;
+            layer.open({
+                type: 1,
+                content: $(".upload")
+            });
+        });
+        upload.render({
+            elem: ".upload",
+            url: '/upload/', //上传接口
+            data: {qnrId: ''},
+            choose: function () {
+                this.data.qnrId = qnrId
+            }
+        })
+    })
+</script>
 </html>
